@@ -5,19 +5,19 @@ package com.example.nitinmehta.news;
  */
 
 public class AndroidVersion {
-    private String ver;
-    private String name;
-    private String api;
+    public String ver;
+    public String name;
+    public String api;
 
-    private String getVer() {
+    public String getVer() {
         return ver;
     }
 
-    private String getName() {
+    public String getName() {
         return name;
     }
 
-    private String getApi() {
+    public String getApi() {
         return api;
     }
 }

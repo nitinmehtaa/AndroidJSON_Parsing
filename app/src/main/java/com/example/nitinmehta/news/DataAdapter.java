@@ -34,7 +34,10 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return android.size();
+        if (android != null)
+            return android.size();
+        else
+            return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

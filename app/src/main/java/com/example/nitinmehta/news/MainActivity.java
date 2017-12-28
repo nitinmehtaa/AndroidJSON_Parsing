@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.JsonReader;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ArrayList<AndroidVersion> data;
-    private DataAdapter adapter;
+    private DataAdapter adapter = new DataAdapter(null);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
         loadJSON();
 }
     private void loadJSON(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(http://api.learn2crack.com/android/jsonandroid)
+                .baseUrl("http://api.learn2crack.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RequestInterface request = retrofit.create(RequestInterface.class);
@@ -46,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
 
+                Log.e("Json", response.body().toString());
                 JSONResponse jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getAndroid()));
+                data = jsonResponse.getAndroid();
                 adapter = new DataAdapter(data);
                 recyclerView.setAdapter(adapter);
             }
